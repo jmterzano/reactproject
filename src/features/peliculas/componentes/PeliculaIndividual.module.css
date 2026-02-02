@@ -17,3 +17,26 @@
 .div a {
     text-decoration: none;
 }
+
+.pelicula {
+    width: 225px;
+    margin-right: 2%;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.pelicula p {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.pelicula img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;   /* 🔥 CLAVE */
+    border-radius: 8px;
+}
+
+.pelicula a {
+    text-decoration: none;
+}

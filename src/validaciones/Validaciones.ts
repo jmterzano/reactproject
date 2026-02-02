@@ -15,3 +15,18 @@ export function primeraLetraMayuscula() {
 
      }
   }
+
+
+  export function fechaNoPuedeSerFutura() {
+
+    return {    
+        name: 'fecha-no-es-futura',
+        message: 'La fecha no puede ser futura',
+        test: (valor: string | undefined) => { 
+            if(!valor) return true;
+            const fecha = new Date(valor);
+            const hoy = new Date();
+            return fecha <= hoy;
+        }
+    }
+}
