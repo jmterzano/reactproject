@@ -10,6 +10,8 @@ import type Genero from "../../generos/modelos/Genero.model";
 import type SelectorMultipleModel from "../../../componentes/SelectorMultiple/SelectorMutiple.mode";
 import { useState } from "react";
 import type Cine from "../../cines/modelos/Cine.models";
+import TypeheadActores from "./TypeaheadActores";
+import type ActorPelicula from "../modelos/ActorPelicula";
 
 export default function FormularioPelicula(props: FormularioPeliculaProps) {
 
@@ -35,6 +37,8 @@ export default function FormularioPelicula(props: FormularioPeliculaProps) {
 
     const [cinesSeleccionados, setCinesSeleccionados] = useState(mapear(props.cinesSeleccionados));
     const [cinesNoSeleccionados, setCinesNoSeleccionados] = useState(mapear(props.cinesNoSeleccionados));
+
+    const [actoresSeleccionados, setActoresSeleccionados] = useState(props.actoresSeleccionados);
 
     const onSubmit: SubmitHandler<PeliculaCreacion> = (data) => {
         data.generosIds = generosSeleccionados.map(x => x.llave);
@@ -88,6 +92,14 @@ export default function FormularioPelicula(props: FormularioPeliculaProps) {
             }}/>
             </div>
 
+            <div className="form-group">
+                <TypeheadActores
+                actores={actoresSeleccionados}
+                onAdd={actores => {
+                    setActoresSeleccionados(actores);
+                }}/>
+            </div>
+
             <div className="mt-2">
                 <Boton type="submit" disabled={!isValid || isSubmitting}>
                     {isSubmitting ? "Enviando..." : "Enviar"}
@@ -107,6 +119,7 @@ interface FormularioPeliculaProps {
     generosNoSeleccionados: Genero[];
     cinesSeleccionados: Cine[];
     cinesNoSeleccionados: Cine[];
+    actoresSeleccionados: ActorPelicula[];
 }
 
 const reglasDeValidacion = yup.object({
