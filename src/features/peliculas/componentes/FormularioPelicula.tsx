@@ -43,6 +43,7 @@ export default function FormularioPelicula(props: FormularioPeliculaProps) {
     const onSubmit: SubmitHandler<PeliculaCreacion> = (data) => {
         data.generosIds = generosSeleccionados.map(x => x.llave);
         data.cinesIds = cinesSeleccionados.map(x => x.llave);
+        data.actores = actoresSeleccionados;
 
         props.onSubmit(data);
     }
@@ -97,7 +98,21 @@ export default function FormularioPelicula(props: FormularioPeliculaProps) {
                 actores={actoresSeleccionados}
                 onAdd={actores => {
                     setActoresSeleccionados(actores);
-                }}/>
+                }}
+
+                onRemove={actor=>{
+                    const actores = actoresSeleccionados.filter(x => x !== actor);
+                    setActoresSeleccionados(actores);
+                }}
+
+                onCambioPersonaje={(id, personaje) => {
+                    const indice = actoresSeleccionados.findIndex(x => x.id === id);
+
+                    const actores = [...actoresSeleccionados];
+                    actores[indice].personaje = personaje;
+                    setActoresSeleccionados(actores);
+                }}
+                />
             </div>
 
             <div className="mt-2">

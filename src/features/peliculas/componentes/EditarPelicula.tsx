@@ -6,6 +6,7 @@ import FormularioPelicula from "./FormularioPelicula";
 import Cargando from "../../../componentes/Cargando";
 import type Genero from "../../generos/modelos/Genero.model";
 import type Cine from "../../cines/modelos/Cine.models";
+import type ActorPelicula from "../modelos/ActorPelicula";
 
 export default function EditarPelicula() {
 
@@ -32,6 +33,9 @@ export default function EditarPelicula() {
             {id: 2, nombre:'Sambil', latitud: 0, longitud: 0},
           ];
      
+          const actoresSeleccionados: ActorPelicula[] = [{
+    id: 1, nombre:'Tom Holland',personaje:'Spider-Man',foto: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Tom_Holland_during_pro-am_Wentworth_golf_club_2023-2.jpg/330px-Tom_Holland_during_pro-am_Wentworth_golf_club_2023-2.jpg'
+  }]
    
 
   return (
@@ -39,8 +43,10 @@ export default function EditarPelicula() {
       <h3>Editar Pelicula</h3>
       {modelo ? <FormularioPelicula modelo={modelo} onSubmit={onSubmit} 
       generosNoSeleccionados={generosNoSeleccionados}
-      generosSeleccionados={generosSeleccionados}
-      cinesSeleccionados={cinesSeleccionados} cinesNoSeleccionados={cinesNoSeleccionados}/>: <Cargando />}
+      generosSeleccionados={generosSeleccionados} 
+      cinesSeleccionados={cinesSeleccionados} cinesNoSeleccionados={cinesNoSeleccionados}
+      actoresSeleccionados={actoresSeleccionados}
+      />: <Cargando />}
     </>
   )
 }

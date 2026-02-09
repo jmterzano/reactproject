@@ -1,6 +1,7 @@
 import { Typeahead } from "react-bootstrap-typeahead";
 import type { Option } from "react-bootstrap-typeahead/types/types";
 import type ActorPelicula from "../modelos/ActorPelicula";
+import { useState } from "react";
 
 export default function TypeheadActores(props: TypeheadActoresProps){
 
@@ -15,6 +16,29 @@ const actores: ActorPelicula[] = [{
 }]
 
     const seleccion: ActorPelicula[] = [];
+
+    const [elementoArrastrado, setElementoArrastrado] = useState<ActorPelicula | undefined>(undefined);
+
+    const manejarDragStart = (actor: ActorPelicula) => {
+        setElementoArrastrado(actor);
+    }
+
+    const manejarDragOver = (actor: ActorPelicula) => {
+        if(!elementoArrastrado || actor.id === elementoArrastrado.id){
+            return;
+        }
+
+        const actores = [...props.actores];
+        const indiceDesde = actores.findIndex(x => x.id === elementoArrastrado.id);
+        const indiceHasta = actores.findIndex(x => x.id === actor.id);
+
+        if(indiceDesde !== -1 && indiceHasta !== -1){
+            [actores[indiceDesde],actores[indiceHasta]] = [actores[indiceHasta],actores[indiceDesde]];
+            props.onAdd(actores);
+        }
+
+
+    }
 
     return ( 
     <>   
@@ -58,6 +82,9 @@ const actores: ActorPelicula[] = [{
          <ul className="list-group">
             {props.actores.map(actor => (
                 <li
+                draggable={true}
+                onDragStart={() => manejarDragStart(actor)}
+                onDragOver={()=> manejarDragOver(actor)}
                 className="list-group-item d-flex align-items-center"
                 key={actor.id}
                 >
@@ -73,11 +100,12 @@ const actores: ActorPelicula[] = [{
                   <div className="flex-grow-1 mx-3">
                     <input className="form-control"
                     placeholder="Personaje" type="text" value={actor.personaje}
-                    onChange={e => {
-
-                    }} />
-
+                    onChange={e => {props.onCambioPersonaje(actor.id, e.currentTarget.value)}} />
                   </div>
+                  <span role="button" className="bagde text-bg-secondary"
+                  onClick={()=>props.onRemove(actor)}
+                  >X
+                  </span>
              </li>
             ))}
          </ul>
@@ -88,4 +116,6 @@ const actores: ActorPelicula[] = [{
 interface TypeheadActoresProps{
     actores: ActorPelicula[];
     onAdd(actores: ActorPelicula[]):void
+    onCambioPersonaje(id:number, personaje:string):void;
+    onRemove(actor:ActorPelicula):void;
 }
