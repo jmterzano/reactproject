@@ -43,5 +43,5 @@ interface FormularioGeneroProps {
 
 
 const regasDeValidacion = yup.object({
-  nombre: yup.string().required("El nombre es requerido").test(primeraLetraMayuscula())
+  nombre: yup.string().required("El nombre es requerido")
 })
