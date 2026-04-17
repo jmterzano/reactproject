@@ -3,12 +3,16 @@ import FormularioGenero from "./FormularioGenero";
 import type GeneroCreacion from "../modelos/GeneroCreacion.model";
 import clienteAPI from "../../../api/clienteAxios";
 import { useNavigate } from "react-router";
+import { useState } from "react";
+import { extraerErrores } from "../../../utilidades/extraerErrores";
+import type {AxiosError } from "axios";
 
 
 
 export default function CrearGenero() {
 
   const navigate = useNavigate();
+  const [errores, setErrores] = useState<string[]>([]);
 
   const onSubmit: SubmitHandler<GeneroCreacion> = async(data) => {
 
@@ -16,14 +20,15 @@ export default function CrearGenero() {
        await clienteAPI.post('/generos', data); 
        navigate('/generos')
     } catch (error) {
-      console.error(error);
+      const errores = extraerErrores(error as AxiosError);
+      setErrores(errores);
     }
   }
 
   return (
     <>
      <h3>Crear Genero</h3>
-     <FormularioGenero onSubmit={onSubmit} />
+     <FormularioGenero errores={errores} onSubmit={onSubmit} />
     </>
   );
 }

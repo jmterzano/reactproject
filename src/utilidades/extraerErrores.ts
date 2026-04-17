@@ -1,4 +1,4 @@
-import type { Axios, AxiosError } from "axios";
+import type { AxiosError } from "axios";
 
 export function extraerErrores(obj: AxiosError): string[] {
     const data = obj.response?.data as RespuestaError;
@@ -7,7 +7,9 @@ export function extraerErrores(obj: AxiosError): string[] {
     let mensajeDeErrores: string[] = [];
 
     for (const campo in err) {
-        const mensajesConCampo = err
+        const mensajesConCampo = err[campo].map(mensaje => `${campo}: ${mensaje}`);
+        mensajeDeErrores = mensajeDeErrores.concat(mensajesConCampo);
+    }
 
     return mensajeDeErrores;
 }
