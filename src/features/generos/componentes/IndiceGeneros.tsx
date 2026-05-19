@@ -34,7 +34,7 @@ export default function IndiceGeneros() {
               <td>{genero.nombre}</td>
               <td className="text-end">
                 <Boton onClick={() => navigate(`/generos/editar/${genero.id}`)} className="btn btn-sm btn-outline-primary me-2"><i className="bi bi-pencil me-1"></i>Editar</Boton>
-                <Boton className="btn btn-sm btn-outline-primary me-2"><i className="bi bi-trash me-1"></i>Eliminar</Boton>
+                <Boton className="btn btn-sm btn-outline-primary me-2"><i className="bi bi-trash me-1"></i>Borrar</Boton>
               </td>
             </tr>)}
           </tbody>
